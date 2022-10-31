@@ -44,17 +44,6 @@ private final UserService us;
         us.save(user);
         return "redirect:/admin";
     }
-//    @GetMapping("/edit/{id}")
-//    public String edit(Model model, @PathVariable("id") Long id){
-//        model.addAttribute("user", us.getById(id));
-//        return "edit";
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public String update(@ModelAttribute("user") User user, @ModelAttribute("role") String role){
-//        us.save(user);
-//        return "redirect:/admin";
-//    }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Long id){
