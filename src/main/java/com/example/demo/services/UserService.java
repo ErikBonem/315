@@ -19,34 +19,40 @@ import java.util.List;
 public class UserService implements UserDetailsService {
     private final UserRepo userRepository;
     private final RoleRepository roleRepository;
+
     @Autowired
     public UserService(UserRepo userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 
-    public User getById(Long id) { return userRepository.getById(id); }
+    public User getById(Long id) {
+        return userRepository.getById(id);
+    }
+
     @Transactional
     public void save(User user) {
         userRepository.save(user);
     }
 
-    public void update (User user){
+    public void update(User user) {
         userRepository.update(user);
     }
+
     @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
@@ -56,7 +62,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public  User getAuthUser() {
+    public User getAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByUsername(auth.getName());
     }

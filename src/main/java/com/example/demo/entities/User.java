@@ -31,8 +31,8 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(name = "users_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
     @Override
@@ -43,23 +43,30 @@ public class User implements UserDetails {
         return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(age, user.age) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
     }
 
     @Override
-    public boolean isAccountNonExpired() { return false;}
+    public boolean isAccountNonExpired() {
+        return false;
+    }
 
     @Override
-    public boolean isAccountNonLocked() { return false;}
+    public boolean isAccountNonLocked() {
+        return false;
+    }
 
     @Override
-    public boolean isCredentialsNonExpired() { return false;}
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
 
     @Override
-    public boolean isEnabled() { return false;}
+    public boolean isEnabled() {
+        return false;
+    }
 
     public User(String username, Long age, String password, String email, Collection<Role> roles) {
         this.username = username;
@@ -73,6 +80,7 @@ public class User implements UserDetails {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return String.join(" ", AuthorityUtils.authorityListToSet(getRoles()));
     }
+
     public Collection<Role> getRoles() {
         return roles;
     }

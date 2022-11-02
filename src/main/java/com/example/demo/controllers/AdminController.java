@@ -19,8 +19,8 @@ import java.util.Set;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-private final UserService us;
-private final RoleRepository rr;
+    private final UserService us;
+    private final RoleRepository rr;
 
     @Autowired
     public AdminController(UserService us, RoleRepository rr) {
@@ -28,14 +28,15 @@ private final RoleRepository rr;
         this.rr = rr;
     }
 
-        @GetMapping()
-        public String index(Model model){
-            model.addAttribute("users", us.findAll());
-            model.addAttribute("user", us.getAuthUser());
-            model.addAttribute("allRoles", us.getAllRoles());
-            model.addAttribute("newUser", new User());
-            return "admin";
-        }
+    @GetMapping()
+    public String index(Model model) {
+        model.addAttribute("users", us.findAll());
+        model.addAttribute("user", us.getAuthUser());
+        model.addAttribute("allRoles", us.getAllRoles());
+        model.addAttribute("newUser", new User());
+        return "admin";
+    }
+
     @GetMapping(value = "/new")
     public String newUser(ModelMap model) {
         model.addAttribute("user", new User());
@@ -54,12 +55,13 @@ private final RoleRepository rr;
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         us.deleteById(id);
-        return "redirect:/admin";}
+        return "redirect:/admin";
+    }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/edit/{id}")
-    public String editUser(@ModelAttribute("userEd") User user, @PathVariable("id") Long id, Model model,@RequestParam("rolesSelected") Long[] roles) {
+    public String editUser(@ModelAttribute("userEd") User user, @PathVariable("id") Long id, Model model, @RequestParam("rolesSelected") Long[] roles) {
         model.addAttribute("userEd", us.getById(id));
         Set<Role> roleSet = new HashSet<>();
         for (Long s : roles) {
