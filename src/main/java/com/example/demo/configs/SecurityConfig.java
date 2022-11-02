@@ -24,17 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
 
+                .csrf().disable().antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
+                .antMatchers("/", "/login/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(successUserHandler)
+                .formLogin().loginPage("/login").permitAll().
+                successHandler(successUserHandler)
+                .and()
+                .logout().logoutSuccessUrl("/login")
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/")
-                .permitAll();
+                .httpBasic();
     }
     @Bean
     public PasswordEncoder passwordEncoder() {

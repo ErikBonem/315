@@ -23,6 +23,16 @@ public class UserController {
         model.addAttribute("user", userService.getAuthUser());
         return "user";
     }
+
+    @GetMapping("/login")
+    public String home() {
+        return "login";
+    }
+
+    @GetMapping("")
+    public String homepage() {
+        return "login";
+    }
     @GetMapping("user/logout")
     public String logout(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
