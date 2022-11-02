@@ -21,7 +21,7 @@ public class UserController {
     @RequestMapping("/user")
     public String show(Model model) {
         model.addAttribute("user", userService.getAuthUser());
-        return "show";
+        return "user";
     }
     @GetMapping("user/logout")
     public String logout(HttpServletRequest request) {
