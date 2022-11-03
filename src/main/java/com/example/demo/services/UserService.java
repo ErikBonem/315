@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -45,11 +47,21 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(User newuser, Long[] roles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (Long s : roles) {
+            roleSet.add(roleRepository.getById(s));
+        }
+        newuser.setRoles(roleSet);
+        userRepository.save(newuser);
     }
 
-    public void update(User user) {
+    public void update(User user, Long[] roles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (Long s : roles) {
+            roleSet.add(roleRepository.getById(s));
+        }
+        user.setRoles(roleSet);
         userRepository.update(user);
     }
 

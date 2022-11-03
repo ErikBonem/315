@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.FillTables;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.RoleRepository;
@@ -11,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,12 +43,7 @@ public class AdminController {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String newUser(@ModelAttribute User newuser, @RequestParam("rolesSelected") Long[] roles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (Long s : roles) {
-            roleSet.add(rr.getById(s));
-        }
-        newuser.setRoles(roleSet);
-        us.save(newuser);
+        us.save(newuser, roles);
         return "redirect:/admin";
     }
 
@@ -63,12 +56,7 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.PATCH, value = "/edit/{id}")
     public String editUser(@ModelAttribute("userEd") User user, @PathVariable("id") Long id, Model model, @RequestParam("rolesSelected") Long[] roles) {
         model.addAttribute("userEd", us.getById(id));
-        Set<Role> roleSet = new HashSet<>();
-        for (Long s : roles) {
-            roleSet.add(rr.getById(s));
-        }
-        user.setRoles(roleSet);
-        us.update(user);
+        us.update(user, roles);
         return "redirect:/admin";
     }
 

@@ -1,6 +1,5 @@
 package com.example.demo.entities;
 
-import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,7 +13,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
-@Data
 @Table(name = "users")
 public class User implements UserDetails {
     @Id

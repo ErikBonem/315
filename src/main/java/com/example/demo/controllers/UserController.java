@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.FillTables;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final FillTables fillTables;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FillTables fillTables) {
         this.userService = userService;
+        this.fillTables = fillTables;
     }
 
     @RequestMapping("/user")
@@ -26,11 +29,13 @@ public class UserController {
 
     @GetMapping("/login")
     public String home() {
+        fillTables.fillTables();
         return "login";
     }
 
     @GetMapping("")
     public String homepage() {
+
         return "login";
     }
     @GetMapping("user/logout")

@@ -133,8 +133,7 @@
                                                                     <select name="rolesSelected" multiple required
                                                                             size="2">
                                                                         <div th:each="role : ${allRoles}">
-                                                                            <option th:each="role: ${allRoles}"
-                                                                                    th:value="${role.id}"
+                                                                            <option th:value="${role.id}"
                                                                                     th:text="${role.name}" name="roles">
                                                                             </option>
                                                                         </div>
@@ -205,8 +204,7 @@
                                                                     <select name="rolesSelected" multiple required
                                                                             size="2" disabled>
                                                                         <div th:each="role : ${allRoles}">
-                                                                            <option th:each="role: ${allRoles}"
-                                                                                    th:value="${role.id}"
+                                                                            <option th:value="${role.id}"
                                                                                     th:text="${role.name}" name="roles">
                                                                             </option>
                                                                         </div>
@@ -242,10 +240,11 @@
                                     <form th:method="POST" th:action="@{/admin/new}">
                                         <div class="row justify-content-center">
                                             <div class="col text-center">
+
                                                 <div class="form-group">
                                                     <h6 class="text-center fw-bold">Username</h6>
                                                     <input size="40" type="text"
-                                                           name="Username   " id="username"/>
+                                                           name="Username" id="username"/>
                                                 </div>
 
                                                 <br/>
