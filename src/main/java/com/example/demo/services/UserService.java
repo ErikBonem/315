@@ -56,6 +56,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(newuser);
     }
 
+    @Transactional
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     public void update(User user, Long[] roles) {
         Set<Role> roleSet = new HashSet<>();
         for (Long s : roles) {
@@ -64,6 +69,12 @@ public class UserService implements UserDetailsService {
         user.setRoles(roleSet);
         userRepository.update(user);
     }
+
+    public void update(User user) {
+        userRepository.update(user);
+    }
+
+
 
     @Transactional
     public void deleteById(Long id) {

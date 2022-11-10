@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import com.example.demo.FillTables;
-import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.RoleRepository;
 import com.example.demo.services.UserService;
@@ -18,12 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService us;
-    private final RoleRepository rr;
 
     @Autowired
     public AdminController(UserService us, RoleRepository rr) {
         this.us = us;
-        this.rr = rr;
     }
 
     @GetMapping()
@@ -35,11 +31,6 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping(value = "/new")
-    public String newUser(ModelMap model) {
-        model.addAttribute("user", new User());
-        return "new";
-    }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String newUser(@ModelAttribute User newuser, @RequestParam("rolesSelected") Long[] roles) {

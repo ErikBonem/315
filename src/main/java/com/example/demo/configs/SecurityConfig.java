@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
 
-                .csrf().disable().antMatcher("/**")
+
                 .authorizeRequests()
                 .antMatchers("/", "/login/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutSuccessUrl("/login")
                 .permitAll()
                 .and()
+                .csrf().disable()
                 .httpBasic();
     }
     @Bean

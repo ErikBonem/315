@@ -24,18 +24,17 @@ public class UserController {
     @RequestMapping("/user")
     public String show(Model model) {
         model.addAttribute("user", userService.getAuthUser());
-        return "user";
-    }
+        return "user";    }
 
     @GetMapping("/login")
     public String home() {
-        fillTables.fillTables();
+
         return "login";
     }
 
     @GetMapping("")
     public String homepage() {
-
+        fillTables.fillTables();
         return "login";
     }
     @GetMapping("user/logout")

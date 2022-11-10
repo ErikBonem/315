@@ -14,7 +14,6 @@ import java.util.List;
 public class UserRepo {
     @PersistenceContext
     private EntityManager entityManager;
-
     @Autowired
     public UserRepo(EntityManager entityManager) {
         this.entityManager = entityManager;
