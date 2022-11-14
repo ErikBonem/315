@@ -6,7 +6,7 @@ const addForm = document.getElementById("add-form");
 const renderPosts = (users) => {
     let temp = '';
     users.forEach((u) => {
-        temp +=`<tr>
+        temp += `<tr>
                                 <td>${u.id}</td>
                                 <td id=${'name' + u.id}>${u.username}</td>
                                 <td id=${'age' + u.id}>${u.age}</td>
@@ -29,20 +29,22 @@ const renderPosts = (users) => {
 function getAllUsers() {
     fetch(url)
         .then(res => res.json())
-        .then(data => {renderPosts(data)})
+        .then(data => {
+            renderPosts(data)
+        })
 }
+
 getAllUsers()
 
 // Добавление пользователя
-addForm.addEventListener('submit', addUser)
 
-function addUser() {
+addForm.addEventListener('submit', (e) => {
+    e.preventDefault();
     let nameValue = document.getElementById("username").value;
     let ageValue = document.getElementById("age").value;
     let emailValue = document.getElementById("email").value;
     let passwordValue = document.getElementById("password").value;
     let roles = getRoles(Array.from(document.getElementById("addRoles").selectedOptions).map(role => role.value));
-
     let newUser = {
         username: nameValue,
         age: ageValue,
@@ -50,7 +52,6 @@ function addUser() {
         password: passwordValue,
         roles: roles
     }
-
     fetch(url, {
         method: "POST",
         headers: {
@@ -59,11 +60,45 @@ function addUser() {
         },
         body: JSON.stringify(newUser)
     })
-        .then(() => {
-            document.getElementById("usersTable").click();
-            getAllUsers();
-        })
-}
+        .then(data => {
+        const dataArr = [];
+        dataArr.push(data);
+        getAllUsers(data);
+    }).then(() => {
+            document.getElementById("nav-home-tab").click();})
+})
+
+
+// addForm.addEventListener('submit', addUser)
+// function addUser() {
+//     let nameValue = document.getElementById("username").value;
+//     let ageValue = document.getElementById("age").value;
+//     let emailValue = document.getElementById("email").value;
+//     let passwordValue = document.getElementById("password").value;
+//     let roles = getRoles(Array.from(document.getElementById("addRoles").selectedOptions).map(role => role.value));
+//
+//     let newUser = {
+//         username: nameValue,
+//         age: ageValue,
+//         email: emailValue,
+//         password: passwordValue,
+//         roles: roles
+//     }
+//
+//     fetch(url, {
+//         method: "POST",
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json;charset=UTF-8'
+//         },
+//         body: JSON.stringify(newUser)
+//     })
+//         .then(() => {
+//             document.getElementById("nav-home-tab").click();
+//             getAllUsers();
+//         })
+// }
+
 
 function getRoles(rols) {
     let roles = [];
@@ -177,6 +212,7 @@ function userAuthInfo() {
             tableForUser.innerHTML = temp;
         });
 }
+
 userAuthInfo()
 
 function userPanel() {
@@ -186,4 +222,5 @@ function userPanel() {
             panel.innerHTML = `<h5>${u.email} with roles: ${u.role}</h5>`
         });
 }
+
 userPanel()
